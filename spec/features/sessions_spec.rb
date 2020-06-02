@@ -32,7 +32,7 @@ RSpec.feature 'Sessions management', tpye: :feature do
     expect(page).to have_current_path(root_path)
 
     click_link 'Log out'
-    find_link('Log in')
+    expect(page).to have_content('Log in')
     expect(page).to have_content('You have logged out')
     expect(page).to have_current_path(root_path)
   end
