@@ -16,8 +16,8 @@ RSpec.feature 'Sessions management', tpye: :feature do
     fill_in 'password', with: user.password
     click_button 'Log in'
 
-    expect(page).to have_current_path(root_path)
     expect(page).to have_text('You have logged in')
+    expect(page).to have_current_path(root_path)
   end
 
   scenario 'User tries to logout when logged in' do 
@@ -28,11 +28,11 @@ RSpec.feature 'Sessions management', tpye: :feature do
     fill_in 'password', with: user.password
     click_button 'Log in'
 
-    expect(page).to have_current_path(root_path)
     expect(page).to have_text('You have logged in')
+    expect(page).to have_current_path(root_path)
 
     click_link 'Log out'
-    expect(page).to have_current_path(root_path)
     expect(page).to have_text('You have logged out')
+    expect(page).to have_current_path(root_path)
   end
 end
