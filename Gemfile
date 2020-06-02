@@ -48,6 +48,7 @@ group :test do
   gem 'webdrivers'
   # RSpec testing
   gem 'rspec-rails', '~> 4.0.0'
+  gem 'rspec-wait'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
