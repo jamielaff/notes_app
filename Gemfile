@@ -16,7 +16,7 @@ gem 'sass-rails', '>= 6'
 # Bootstrap styling
 gem 'bootstrap-sass', '~> 3.4.1' 
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
+# gem 'turbolinks', '~> 5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
@@ -42,6 +42,7 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.5.0'
+  gem 'selenium-webdriver'
   gem 'poltergeist'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
