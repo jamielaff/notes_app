@@ -41,7 +41,7 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.3.0'
+  gem 'capybara', '>= 2.5.0'
   gem 'poltergeist'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
