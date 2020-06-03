@@ -15,7 +15,7 @@ RSpec.feature 'Users CRUD', tpye: :feature do
     fill_in 'user_username', with: 'new_user'
     fill_in 'user_email',    with: 'new@email.com'
     fill_in 'user_password', with: 'password'
-    select('team_member', :from => 'user_is_admin')
+    select 'team_member', from: 'user_is_admin'
     click_button 'Create'
 
     user = User.last
@@ -26,7 +26,7 @@ RSpec.feature 'Users CRUD', tpye: :feature do
     fill_in 'user_username', with: 'new_admin'
     fill_in 'user_email',    with: 'newadmin@email.com'
     fill_in 'user_password', with: 'password'
-    select('admin', :from => 'user_is_admin')
+    select 'admin', from: 'user_is_admin'
     click_button 'Create'
 
     user = User.last
@@ -98,19 +98,63 @@ RSpec.feature 'Users CRUD', tpye: :feature do
   end
 
   scenario 'Admin can update admin account to team member' do
+    admin     = create(:admin)
+    admin_new = create(:another_admin)
 
+    visit login_path
+    fill_in 'username', with: admin.username
+    fill_in 'password', with: admin.password
+    click_button 'Log in'
+
+    visit edit_user_path(admin_new)
+    expect(page).to have_text('Edit User Account')
+    select 'team_member', from: 'user_is_admin'
+    click_button 'Update account'
+
+    expect(User.last.is_admin).to eq(false)
   end
 
   scenario 'Admin can update team member to admin' do
+    admin   = create(:admin)
+    user    = create(:user)
 
+    visit login_path
+    fill_in 'username', with: admin.username
+    fill_in 'password', with: admin.password
+    click_button 'Log in'
+
+    visit edit_user_path(user)
+    expect(page).to have_text('Edit User Account')
+    select 'admin', from: 'user_is_admin'
+    click_button 'Update account'
+
+    expect(User.last.is_admin).to eq(true)
   end
 
   scenario 'Team member can update their account but not their type' do
+    user = create(:user)
 
+    visit login_path
+    fill_in 'username', with: user.username
+    fill_in 'password', with: user.password
+    click_button 'Log in'
+
+    visit edit_user_path(user)
+    expect(page).to have_text('Edit User Account')
+    expect(page).not_to have_text('Account type')
   end
 
   scenario 'Team member cannot update an account which is not theirs' do
+    user      = create(:user)
+    user_new  = create(:another_user)
 
+    visit login_path
+    fill_in 'username', with: user.username
+    fill_in 'password', with: user.password
+    click_button 'Log in'
+
+    visit edit_user_path(user_new)
+    expect(page).to have_text('You are not authorised to perform that action')
   end
 
   # Delete
