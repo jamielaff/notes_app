@@ -196,7 +196,16 @@ RSpec.feature 'Users CRUD', type: :feature do
   end
 
   scenario 'Team member can only delete their account' do
+    admin     = create(:admin)
+    user      = create(:user)
 
+    visit login_path
+    fill_in 'username', with: user.username
+    fill_in 'password', with: user.password
+    click_button 'Log in'
+
+    expect(page).not_to have_button('Delete')
+    # I want to expand this test, to try to actually delete the admin user as a team_member
   end
 
 end
