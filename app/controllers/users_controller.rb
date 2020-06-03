@@ -22,11 +22,11 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = current_user
+    @user = User.find(params[:id])
   end
 
   def update
-    @user = current_user
+    @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:success] = "#{@user.username}'s account was updated successfully"
       redirect_to user_path(@user)
