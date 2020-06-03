@@ -171,14 +171,12 @@ RSpec.feature 'Users CRUD', type: :feature do
     expect(User.count).to eq(3)
 
     visit user_path(admin_new)
-    click_link 'Delete'
-    sleep 1.seconds
+    click_button 'Delete'
     expect(page).to have_text('User was deleted')
     expect(User.count).to eq(2)
 
     visit user_path(user)
-    click_link 'Delete'
-    sleep 1.seconds
+    click_button 'Delete'
     expect(page).to have_text('User was deleted')
     expect(User.count).to eq(1)
   end
@@ -192,8 +190,7 @@ RSpec.feature 'Users CRUD', type: :feature do
     click_button 'Log in'
 
     visit user_path(admin)
-    click_link 'Delete'
-    sleep 1.seconds
+    click_button 'Delete'
     expect(page).to have_text('User was deleted')
     expect(User.count).to eq(0)
   end
