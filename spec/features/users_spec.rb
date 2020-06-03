@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Users CRUD', tpye: :feature do
+RSpec.feature 'Users CRUD', type: :feature do
   # Create
   scenario 'Admin can create users of both account types' do
     admin = create(:admin)
@@ -159,11 +159,40 @@ RSpec.feature 'Users CRUD', tpye: :feature do
 
   # Delete
   scenario 'Admin can delete any account' do
+    admin     = create(:admin)
+    admin_new = create(:another_admin)
+    user      = create(:user)
 
+    visit login_path
+    fill_in 'username', with: admin.username
+    fill_in 'password', with: admin.password
+    click_button 'Log in'
+
+    expect(User.count).to eq(3)
+
+    visit user_path(admin_new)
+    click_link 'Delete'
+    expect(page).to have_text('User was deleted')
+    expect(User.count).to eq(2)
+
+    visit user_path(user)
+    click_link 'Delete'
+    expect(page).to have_text('User was deleted')
+    expect(User.count).to eq(1)
   end
 
   scenario 'Admin can delete their account' do
+    admin = create(:admin)
 
+    visit login_path
+    fill_in 'username', with: admin.username
+    fill_in 'password', with: admin.password
+    click_button 'Log in'
+
+    visit user_path(admin)
+    click_link 'Delete'
+    expect(page).to have_text('User was deleted')
+    expect(User.count).to eq(0)
   end
 
   scenario 'Team member can only delete their account' do
