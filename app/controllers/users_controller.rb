@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   skip_before_action :authorised, only: [:index, :new, :create, :show]
 
-  before_action :authorised_for_user_actions?, except: [:index, :show]
+  before_action :authorised_for_user_actions, except: [:index, :show]
 
   def index
     @users = User.all
@@ -47,6 +47,13 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def authorised_for_user_actions
+    unless logged_in_as_admin? || current_user == User.find(params[:id])
+      flash[:danger] = "You are not authorised to perform that action"
+      redirect_to root_path
+    end
+  end
 
   def user_params
     params.require(:user).permit(:username, :email, :password, :is_admin)
