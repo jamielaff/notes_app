@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Sessions management', tpye: :feature do
+RSpec.feature 'Sessions management', type: :feature do
   scenario 'User tries to login with no data' do 
     visit login_path
     click_button 'Log in'

@@ -85,7 +85,14 @@ GEM
     diff-lcs (1.3)
     erubi (1.9.0)
     execjs (2.7.0)
+    factory_bot (5.2.0)
+      activesupport (>= 4.2.0)
+    factory_bot_rails (5.2.0)
+      factory_bot (~> 5.2.0)
+      railties (>= 4.2.0)
     ffi (1.13.0)
+    font-awesome-sass (5.12.0)
+      sassc (>= 1.11)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     i18n (1.8.2)
@@ -232,6 +239,8 @@ DEPENDENCIES
   bootstrap-sass (~> 3.4.1)
   byebug
   capybara (>= 2.5.0)
+  factory_bot_rails
+  font-awesome-sass (~> 5.12.0)
   listen (~> 3.2)
   pg
   poltergeist

@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  skip_before_action :authorised
   def new
     @user = User.new
   end
