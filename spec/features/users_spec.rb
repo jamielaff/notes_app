@@ -204,7 +204,14 @@ RSpec.feature 'Users CRUD', type: :feature do
     fill_in 'password', with: user.password
     click_button 'Log in'
 
+    visit user_path(admin)
     expect(page).not_to have_button('Delete')
+
+    visit user_path(user)
+    expect(page).to have_button('Delete')
+
+    click_button 'Delete'
+    expect(page).to have_text('User was deleted')
     # I want to expand this test, to try to actually delete the admin user as a team_member
   end
 
