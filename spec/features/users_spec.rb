@@ -95,6 +95,7 @@ RSpec.feature 'Users CRUD', type: :feature do
 
     user = User.first
     expect(user.username).to eq('hello123')
+    expect(page).to have_text('account was updated successfully')
   end
 
   scenario 'Admin can update admin account to team member' do
@@ -112,6 +113,7 @@ RSpec.feature 'Users CRUD', type: :feature do
     click_button 'Update account'
 
     expect(User.last.is_admin).to eq(false)
+    expect(page).to have_text('account was updated successfully')
   end
 
   scenario 'Admin can update team member to admin' do
@@ -129,6 +131,7 @@ RSpec.feature 'Users CRUD', type: :feature do
     click_button 'Update account'
 
     expect(User.last.is_admin).to eq(true)
+    expect(page).to have_text('account was updated successfully')
   end
 
   scenario 'Team member can update their account but not their type' do
@@ -142,6 +145,12 @@ RSpec.feature 'Users CRUD', type: :feature do
     visit edit_user_path(user)
     expect(page).to have_text('Edit User Account')
     expect(page).not_to have_text('Account type')
+
+    fill_in 'user_username', with: 'test123'
+    fill_in 'user_password', with: 'newPassword'
+    click_button 'Update account'
+
+    expect(page).to have_text('account was updated successfully')
   end
 
   scenario 'Team member cannot update an account which is not theirs' do
