@@ -1,0 +1,9 @@
+<div class="col-xs-8 col-xs-offset-2">
+  <h1>Notes application index page</h1>
+</div>
+
+<%= render partial: 'shared/note', locals: { obj: @notes } %>
+
+<div class="col-xs-8 col-xs-offset-2">
+  <%= will_paginate @notes %>
+</div>

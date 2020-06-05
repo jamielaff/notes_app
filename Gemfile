@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
+gem 'rails', '~> 6.0.3'
 # Use postgres as DB
 gem 'pg'
 # Use Puma as the app server
@@ -33,6 +33,10 @@ gem 'pry'
 
 # Font awesome icons
 gem 'font-awesome-sass', '~> 5.12.0'
+
+# Pagination
+gem 'will_paginate'
+gem 'bootstrap-will_paginate', '1.0.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
