@@ -1,5 +1,4 @@
 <% obj.each do |note| %>
-<div class="row">
   <div class="col-xs-8 col-xs-offset-2">
     <div class="well well-lg">
       <div class="note-title">
@@ -13,8 +12,7 @@
             last updated: <%= time_ago_in_words(note.updated_at) %> ago</small>
         </div>
       </div>
-      <%= render partial: 'shared/controls', locals: { note: note } %>
+      <%= render partial: 'controls', locals: { note: note } %>
     </div>
   </div>
-</div>
 <% end %>
