@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   skip_before_action :authorised, only: [:index, :new, :create, :show]
 
   before_action :authorised_for_user_create, except: [:index, :show, :edit, :update, :destroy]
-  before_action :authorised_for_user_update, except: [:index, :show]
+  before_action :authorised_for_user_update, except: [:index, :new, :create, :show]
 
   def index
     @users = User.all
@@ -15,8 +15,14 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      flash[:success] = "Created new user, #{@user.username}"
-      redirect_to user_path(@user)
+      if !logged_in?
+        flash[:success] = "Welcome #{@user.username}"
+        session[:user_id] = @user.id
+        redirect_to root_path
+      else
+        flash[:success] = "Created new user, #{@user.username}"
+        redirect_to user_path(@user)
+      end
     else
       render 'new'
      end
@@ -53,7 +59,7 @@ class UsersController < ApplicationController
   private
 
   def authorised_for_user_create
-    unless logged_in_as_admin?
+    unless logged_in_as_admin? || !logged_in?
       flash[:danger] = "You are not authorised to perform that action"
       redirect_to root_path
     end
