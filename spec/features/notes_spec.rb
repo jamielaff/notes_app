@@ -195,7 +195,7 @@ RSpec.feature 'Notes CRUD', type: :feature, js: true do
     expect(Note.pending.count).to eq(0)
   end
 
-  scenario 'Team member can approve pending note' do
+  scenario 'Team member cannot approve pending note' do
     pending_note = create(:pending_note, user: team_member)
     expect(Note.active.count).to eq(2)
     expect(Note.pending.count).to eq(1)
