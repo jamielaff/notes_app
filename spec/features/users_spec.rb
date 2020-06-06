@@ -50,6 +50,16 @@ RSpec.feature 'Users CRUD', type: :feature, js: true do
     expect(page).to have_text('You are not authorised to perform that action')
   end
 
+  scenario 'New user can sign up' do
+    visit signup_path
+    fill_in 'user_username',  with: 'NewSignup'
+    fill_in 'user_email',     with: 'new@signup.com'
+    fill_in 'user_password',  with: 'password'
+    click_button 'Signup'
+
+    expect(page).to have_text('Welcome')
+  end
+
   # Read
   scenario 'Admin can view users of both account types' do
     visit login_path
