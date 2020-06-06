@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_action :authorised_for_user_update, except: [:index, :show]
 
   def index
-    @users = User.all
+    @users = User.paginate(page: params[:page], per_page: 5)
   end
 
   def new
