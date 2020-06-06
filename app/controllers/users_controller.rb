@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_action :authorised_for_user_update, except: [:index, :show]
 
   def index
-    @users = User.all
+    @users = User.paginate(page: params[:page], per_page: 5)
   end
 
   def new
@@ -15,11 +15,17 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      flash[:success] = "Created new user, #{@user.username}"
-      redirect_to user_path(@user)
+      respond_to do |format|
+        format.js {
+          flash[:success] = "Created new user, #{@user.username}"
+          render js: "window.location = '#{user_path(@user)}'"
+        }
+      end
     else
-      render 'new'
-     end
+      respond_to do |format|
+        format.js
+      end
+    end
   end
 
   def edit
@@ -29,10 +35,16 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      flash[:success] = "#{@user.username}'s account was updated successfully"
-      redirect_to user_path(@user)
+      respond_to do |format|
+        format.js {
+          flash[:success] = "#{@user.username}'s account was updated successfully"
+          render js: "window.location = '#{user_path(@user)}'"
+        }
+      end
     else
-      render 'edit'
+      respond_to do |format|
+        format.js
+      end
     end
   end
 

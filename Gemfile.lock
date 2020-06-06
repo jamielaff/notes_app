@@ -80,7 +80,6 @@ GEM
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
     childprocess (3.0.0)
-    cliver (0.3.2)
     coderay (1.1.3)
     concurrent-ruby (1.1.6)
     crass (1.0.6)
@@ -97,7 +96,7 @@ GEM
       sassc (>= 1.11)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    i18n (1.8.2)
+    i18n (1.8.3)
       concurrent-ruby (~> 1.0)
     listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -119,10 +118,6 @@ GEM
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     pg (1.2.3)
-    poltergeist (1.18.1)
-      capybara (>= 2.1, < 4)
-      cliver (~> 0.3.1)
-      websocket-driver (>= 0.2.0)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -200,7 +195,7 @@ GEM
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
-    sprockets (4.0.0)
+    sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-rails (3.2.1)
@@ -242,18 +237,16 @@ DEPENDENCIES
   bootstrap-sass (~> 3.4.1)
   bootstrap-will_paginate (= 1.0.0)
   byebug
-  capybara (>= 2.5.0)
+  capybara
   factory_bot_rails
   font-awesome-sass (~> 5.12.0)
   listen (~> 3.2)
   pg
-  poltergeist
   pry
   puma (~> 4.1)
   rails (~> 6.0.3)
   rspec-rails (~> 4.0.0)
   sass-rails (>= 6)
-  selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data

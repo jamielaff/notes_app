@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Notes CRUD', type: :feature do
+RSpec.feature 'Notes CRUD', type: :feature, js: true do
   let!(:team_member)      { create(:user) }
   let!(:admin)            { create(:admin) }
   let!(:team_member_note) { create(:note, user: team_member) }
@@ -147,11 +147,13 @@ RSpec.feature 'Notes CRUD', type: :feature do
 
     visit edit_note_path(team_member_note)
     click_link 'Delete'
+    page.driver.browser.switch_to.alert.accept
     expect(page).to have_text('Note was deleted')
     expect(Note.count).to eq(1)
 
     visit edit_note_path(admin_note)
     click_link 'Delete'
+    page.driver.browser.switch_to.alert.accept
     expect(page).to have_text('Note was deleted')
     expect(Note.count).to eq(0)
   end
@@ -166,6 +168,7 @@ RSpec.feature 'Notes CRUD', type: :feature do
 
     visit edit_note_path(team_member_note)
     click_link 'Delete'
+    page.driver.browser.switch_to.alert.accept
     expect(page).to have_text('Note was deleted')
     expect(Note.count).to eq(1)
 
