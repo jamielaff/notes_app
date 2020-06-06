@@ -16,10 +16,16 @@ class NotesController < ApplicationController
     @note = Note.new(note_params)
     @note.user = current_user
     if @note.save
-      flash[:success] = "Note was successfully created"
-      redirect_to note_path(@note)
+      respond_to do |format|
+        format.js {
+          flash[:success] = "Note was successfully created"
+          render js: "window.location = '#{note_path(@note)}'"
+        }
+      end
     else
-      render 'new'
+      respond_to do |format|
+        format.js
+      end
     end
   end
 
@@ -28,12 +34,17 @@ class NotesController < ApplicationController
 
   def update
     if @note.update(note_params)
-      flash[:success] = "Note was updated"
-      redirect_to note_path(@note)
-     else
-      flash[:success] = "Note was not updated"
-      render 'edit'
-     end
+      respond_to do |format|
+        format.js {
+          flash[:success] = "Note was updated"
+          render js: "window.location = '#{note_path(@note)}'"
+        }
+      end
+    else
+      respond_to do |format|
+        format.js
+      end
+    end
   end
 
   def destroy

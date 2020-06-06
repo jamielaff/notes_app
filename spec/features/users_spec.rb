@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Users CRUD', type: :feature do
+RSpec.feature 'Users CRUD', type: :feature, js: true do
   let!(:admin)            { create(:admin) }
   let!(:team_member)      { create(:user) }
   let!(:admin_new)        { create(:another_admin) }
@@ -20,10 +20,11 @@ RSpec.feature 'Users CRUD', type: :feature do
     fill_in 'user_password', with: 'password'
     select 'team_member', from: 'user_is_admin'
     click_button 'Create'
+    expect(page).to have_text('Created new user')
 
-    user = User.last
-    expect(user.username).to eq('new_user')
-    expect(user.is_admin).to eq(false)
+    user_team = User.last
+    expect(user_team.username).to eq('new_user')
+    expect(user_team.is_admin).to eq(false)
 
     visit new_user_path
     fill_in 'user_username', with: 'new_admin'
@@ -31,10 +32,11 @@ RSpec.feature 'Users CRUD', type: :feature do
     fill_in 'user_password', with: 'password'
     select 'admin', from: 'user_is_admin'
     click_button 'Create'
+    expect(page).to have_text('Created new user')
 
-    user = User.last
-    expect(user.username).to eq('new_admin')
-    expect(user.is_admin).to eq(true)
+    user_admin = User.last
+    expect(user_admin.username).to eq('new_admin')
+    expect(user_admin.is_admin).to eq(true)
   end
 
   scenario 'Team member cannot create accounts' do
@@ -96,8 +98,8 @@ RSpec.feature 'Users CRUD', type: :feature do
     fill_in 'user_username', with: 'hello123'
     click_button 'Update account'
 
-    expect(User.first.username).to eq('hello123')
     expect(page).to have_text('account was updated successfully')
+    expect(User.first.username).to eq('hello123')
   end
 
   scenario 'Admin can update admin account to team member' do
@@ -111,8 +113,8 @@ RSpec.feature 'Users CRUD', type: :feature do
     select 'team_member', from: 'user_is_admin'
     click_button 'Update account'
 
-    expect(User.last.is_admin).to eq(false)
     expect(page).to have_text('account was updated successfully')
+    expect(User.last.is_admin).to eq(false)
   end
 
   scenario 'Admin can update team member to admin' do
@@ -126,8 +128,8 @@ RSpec.feature 'Users CRUD', type: :feature do
     select 'admin', from: 'user_is_admin'
     click_button 'Update account'
 
-    expect(User.find(team_member.id).is_admin).to eq(true)
     expect(page).to have_text('account was updated successfully')
+    expect(User.find(team_member.id).is_admin).to eq(true)
   end
 
   scenario 'Team member can update their account but not their type' do
@@ -168,11 +170,13 @@ RSpec.feature 'Users CRUD', type: :feature do
 
     visit user_path(admin_new)
     click_link 'Delete'
+    page.driver.browser.switch_to.alert.accept
     expect(page).to have_text('User was deleted')
     expect(User.count).to eq(3)
 
     visit user_path(team_member)
     click_link 'Delete'
+    page.driver.browser.switch_to.alert.accept
     expect(page).to have_text('User was deleted')
     expect(User.count).to eq(2)
   end
@@ -185,6 +189,7 @@ RSpec.feature 'Users CRUD', type: :feature do
 
     visit user_path(admin)
     click_link 'Delete'
+    page.driver.browser.switch_to.alert.accept
     expect(page).to have_text('User was deleted')
     expect(User.count).to eq(3)
   end
@@ -202,6 +207,7 @@ RSpec.feature 'Users CRUD', type: :feature do
     expect(page).to have_link('Delete')
 
     click_link 'Delete'
+    page.driver.browser.switch_to.alert.accept
     expect(page).to have_text('User was deleted')
     # I want to expand this test, to try to actually delete the admin user as a team_member
   end

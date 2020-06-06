@@ -54,9 +54,7 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.5.0'
-  gem 'selenium-webdriver'
-  gem 'poltergeist'
+  gem 'capybara'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
   # RSpec testing
