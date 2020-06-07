@@ -65,8 +65,7 @@ class NotesController < ApplicationController
 
   def approve
     @note = Note.find(params[:note_id])
-    @note.is_active = true
-    if @note.save
+    if @note.approve
       flash[:success] = "Note was approved"
     else
       flash[:danger] = "Something went wrong approving this note"

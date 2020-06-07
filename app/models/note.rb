@@ -13,4 +13,9 @@ class Note < ActiveRecord::Base
   def active?
     is_active
   end
+
+  def approve
+    self.is_active = true
+    self.save
+  end
 end
