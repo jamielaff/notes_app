@@ -1,6 +1,6 @@
 class NotesController < ApplicationController
   # Between these two methods,all actions are blacklisted unless specifically whitelisted
-  skip_before_action :authorised, only: [:index, :show]
+  skip_before_action :authorised,             only: [:index, :show]
   before_action :authorised_for_note_actions, except: [:index, :show, :new, :create, :pending, :approve]
   
   before_action :authorised_to_view_pending_note, only: [:show]
