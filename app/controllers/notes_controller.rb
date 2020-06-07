@@ -36,11 +36,9 @@ class NotesController < ApplicationController
   end
 
   def edit
-    @note = Note.find(params[:id])
   end
 
   def update
-    @note = Note.find(params[:id])
     if @note.update(note_params)
       respond_to do |format|
         format.js {
@@ -56,7 +54,6 @@ class NotesController < ApplicationController
   end
 
   def destroy
-    @note = Note.find(params[:id])
     @note.destroy
     flash[:success] = "Note was deleted"
     redirect_to root_path
