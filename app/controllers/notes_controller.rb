@@ -4,7 +4,7 @@ class NotesController < ApplicationController
   before_action :authorised_for_note_actions, except: [:index, :show, :new, :create, :pending, :approve]
   
   before_action :authorised_to_view_pending_note, only: [:show]
-  before_action :authorised_for_pending,          only: [:pending, :approve]
+  before_action :authorised_for_moderation,       only: [:pending, :approve]
 
   def index
     @notes = Note.active.paginate(page: params[:page], per_page: 5)
@@ -99,7 +99,7 @@ class NotesController < ApplicationController
     end
   end
 
-  def authorised_for_pending
+  def authorised_for_moderation
     unless logged_in_as_admin?
       flash[:danger] = "You are not authorised to perform that action"
       redirect_to root_path
