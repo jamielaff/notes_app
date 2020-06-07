@@ -3,8 +3,8 @@ class Note < ActiveRecord::Base
   validates :description, presence: true, length: { minimum: 10, maximum: 300 }
   belongs_to :user
 
-  scope :active,    -> { where('is_active' => 'true') }
-  scope :pending,   -> { where('is_active' => 'false') }
+  scope :active,    -> { where(is_active: true) }
+  scope :pending,   -> { where(is_active: false) }
 
   def owned_by?(user_to_verify)
     user == user_to_verify
