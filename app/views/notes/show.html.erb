@@ -1,6 +1,6 @@
 <div class="col-xs-8 col-xs-offset-2">
   <h1>
-    <% if !@note.active? %>
+    <% unless @note.active? %>
       <i title="User is an admin" class="fa fa-hourglass-half"></i>
     <% end %>
     Title: <%= @note.title %>
