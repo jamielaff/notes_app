@@ -8,7 +8,7 @@ class Note < ActiveRecord::Base
   scope :pending,   -> { where(is_active: false) }
 
   def owned_by?(user_to_verify)
-    user == user_to_verify
+    user.present? && user == user_to_verify
   end
 
   # In retrospect, the column should be called active not is_active so this method would not be needed
