@@ -15,10 +15,6 @@ gem 'webpacker', '~> 4.0'
 gem 'sass-rails', '>= 6'
 # Bootstrap styling
 gem 'bootstrap-sass', '~> 3.4.1' 
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-# gem 'turbolinks', '~> 5'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
@@ -60,5 +56,5 @@ group :test do
   # RSpec testing
   gem 'rspec-rails', '~> 4.0.0'
   # Factory bot for tests
-  gem "factory_bot_rails"
+  gem 'factory_bot_rails'
 end
