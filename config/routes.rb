@@ -5,7 +5,12 @@ Rails.application.routes.draw do
   get 'signup',     to: 'users#new'
 
   resources :users
-  resources :notes, except: [:index]
+  resources :notes, except: [:index] do
+    collection do
+      get :pending
+    end
+    put :approve
+  end
 
   root 'notes#index'
 end

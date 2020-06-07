@@ -17,7 +17,7 @@ RSpec.feature 'Notes CRUD', type: :feature, js: true do
     fill_in 'note_title',       with: 'New note title'
     fill_in 'note_description', with: 'New note description'
     click_button 'Create Note'
-    expect(page).to have_text('Note was successfully created')
+    expect(page).to have_text('Your note was successfully created, and is pending moderation')
 
     note = Note.last
     expect(note.title).to eq('New note title')
@@ -36,7 +36,7 @@ RSpec.feature 'Notes CRUD', type: :feature, js: true do
     fill_in 'note_title',       with: 'New note title'
     fill_in 'note_description', with: 'New note description'
     click_button 'Create Note'
-    expect(page).to have_text('Note was successfully created')
+    expect(page).to have_text('Your note was successfully created, and is pending moderation')
 
     note = Note.last
     expect(note.title).to eq('New note title')
@@ -175,5 +175,39 @@ RSpec.feature 'Notes CRUD', type: :feature, js: true do
     visit edit_note_path(admin_note)
     expect(page).not_to have_link('Delete')
     expect(Note.count).to eq(1)
+  end
+
+  # Approve
+  scenario 'Admin can approve penting note' do
+    pending_note = create(:pending_note, user: team_member)
+    expect(Note.active.count).to eq(2)
+    expect(Note.pending.count).to eq(1)
+
+    visit login_path
+    fill_in 'username', with: admin.username
+    fill_in 'password', with: admin.password
+    click_button 'Log in'
+
+    visit note_path(pending_note)
+    click_link 'Approve'
+    expect(page).to have_text('Note was approved')
+    expect(Note.active.count).to eq(3)
+    expect(Note.pending.count).to eq(0)
+  end
+
+  scenario 'Team member cannot approve pending note' do
+    pending_note = create(:pending_note, user: team_member)
+    expect(Note.active.count).to eq(2)
+    expect(Note.pending.count).to eq(1)
+
+    visit login_path
+    fill_in 'username', with: team_member.username
+    fill_in 'password', with: team_member.password
+    click_button 'Log in'
+
+    visit note_path(pending_note)
+    expect(page).not_to have_link('Approve')
+    expect(Note.active.count).to eq(2)
+    expect(Note.pending.count).to eq(1)
   end
 end
