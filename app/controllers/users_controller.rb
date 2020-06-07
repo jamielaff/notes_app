@@ -12,6 +12,7 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  # This is used for signup & admin create user. It would be worth moving signup logic out of this CRUD
   def create
     @user = User.new(user_params)
     if @user.save

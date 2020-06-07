@@ -81,12 +81,14 @@ class NotesController < ApplicationController
 
   def authorised_to_view_pending_note
     @note = Note.find(params[:id])
+    # This is worthy of a refactor
     unless @note.active? || logged_in_as_admin? || (logged_in? && @note.owned_by?(current_user))
       flash[:danger] = "You are not authorised to perform that action"
       redirect_to root_path
     end
   end
 
+  # Applies to edit, update & destroy
   def authorised_for_note_actions
     @note = Note.find(params[:id])
     unless @note.owned_by?(current_user) || logged_in_as_admin?
