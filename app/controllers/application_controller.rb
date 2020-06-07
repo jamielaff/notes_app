@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
   helper_method :logged_in?
+  helper_method :logged_out?
   helper_method :logged_in_as_admin?
 
   def current_user
@@ -11,6 +12,10 @@ class ApplicationController < ActionController::Base
 
   def logged_in?
     current_user.present?
+  end
+
+  def logged_out?
+    !logged_in?
   end
 
   def logged_in_as_admin?

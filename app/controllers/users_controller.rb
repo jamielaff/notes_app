@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      if !logged_in?
+      if logged_out?
         session[:user_id] = @user.id
         respond_to do |format|
           format.js {
@@ -76,7 +76,7 @@ class UsersController < ApplicationController
   private
 
   def authorised_for_user_create
-    unless logged_in_as_admin? || !logged_in?
+    unless logged_in_as_admin? || logged_out?
       flash[:danger] = "You are not authorised to perform that action"
       redirect_to root_path
     end
