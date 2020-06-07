@@ -4,6 +4,7 @@ class NotesController < ApplicationController
   before_action :authorised_for_note_actions, except: [:index, :show, :new, :create, :pending, :approve]
   
   before_action :authorised_to_view_pending_note, only: [:show]
+  before_action :authorised_for_pending,          only: [:pending, :approve]
 
   def index
     @notes = Note.active.paginate(page: params[:page], per_page: 5)
@@ -62,28 +63,18 @@ class NotesController < ApplicationController
   end
 
   def pending
-    if logged_in_as_admin?
-      @notes = Note.pending.paginate(page: params[:page], per_page: 5)
-    else
-      flash[:danger] = "You are not authorised to perform that action"
-      redirect_to root_path
-    end
+    @notes = Note.pending.paginate(page: params[:page], per_page: 5)
   end
 
   def approve
-    if logged_in_as_admin?
-      @note = Note.find(params[:note_id])
-      @note.is_active = true
-      if @note.save
-        flash[:success] = "Note was approved"
-      else
-        flash[:danger] = "Something went wrong approving this note"
-      end
-      redirect_to pending_notes_path
+    @note = Note.find(params[:note_id])
+    @note.is_active = true
+    if @note.save
+      flash[:success] = "Note was approved"
     else
-      flash[:danger] = "You are not authorised to perform that action"
-      redirect_to root_path
+      flash[:danger] = "Something went wrong approving this note"
     end
+    redirect_to pending_notes_path
   end
 
   private
@@ -103,6 +94,13 @@ class NotesController < ApplicationController
   def authorised_for_note_actions
     @note = Note.find(params[:id])
     unless @note.owned_by?(current_user) || logged_in_as_admin?
+      flash[:danger] = "You are not authorised to perform that action"
+      redirect_to root_path
+    end
+  end
+
+  def authorised_for_pending
+    unless logged_in_as_admin?
       flash[:danger] = "You are not authorised to perform that action"
       redirect_to root_path
     end
