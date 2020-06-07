@@ -4,7 +4,8 @@ RSpec.feature 'Notes CRUD', type: :feature, js: true do
   let!(:team_member)      { create(:user) }
   let!(:admin)            { create(:admin) }
   let!(:team_member_note) { create(:note, user: team_member) }
-  let!(:admin_note)        { create(:admin_note, user: admin) }
+  let!(:admin_note)       { create(:admin_note, user: admin) }
+  
   # Create
   scenario 'Admin can create a note' do
     visit login_path
@@ -21,7 +22,7 @@ RSpec.feature 'Notes CRUD', type: :feature, js: true do
 
     note = Note.last
     expect(note.title).to eq('New note title')
-    expect(note.description).to eq ('New note description')
+    expect(note.description).to eq('New note description')
     expect(note.owned_by?(admin)).to eq(true)
   end
 
@@ -40,7 +41,7 @@ RSpec.feature 'Notes CRUD', type: :feature, js: true do
 
     note = Note.last
     expect(note.title).to eq('New note title')
-    expect(note.description).to eq ('New note description')
+    expect(note.description).to eq('New note description')
     expect(note.owned_by?(team_member)).to eq(true)
   end
 
