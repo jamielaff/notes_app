@@ -1,6 +1,6 @@
 class NotesController < ApplicationController
-  skip_before_action :authorised, only: [:index, :show]
-
+  # Between these two methods,all actions are blacklisted unless specifically whitelisted
+  skip_before_action :authorised,             only: [:index, :show]
   before_action :authorised_for_note_actions, except: [:index, :show, :new, :create, :pending, :approve]
   
   before_action :authorised_to_view_pending_note, only: [:show]
@@ -36,11 +36,9 @@ class NotesController < ApplicationController
   end
 
   def edit
-    @note = Note.find(params[:id])
   end
 
   def update
-    @note = Note.find(params[:id])
     if @note.update(note_params)
       respond_to do |format|
         format.js {
@@ -56,7 +54,6 @@ class NotesController < ApplicationController
   end
 
   def destroy
-    @note = Note.find(params[:id])
     @note.destroy
     flash[:success] = "Note was deleted"
     redirect_to root_path
@@ -68,8 +65,7 @@ class NotesController < ApplicationController
 
   def approve
     @note = Note.find(params[:note_id])
-    @note.is_active = true
-    if @note.save
+    if @note.approve
       flash[:success] = "Note was approved"
     else
       flash[:danger] = "Something went wrong approving this note"
@@ -85,12 +81,14 @@ class NotesController < ApplicationController
 
   def authorised_to_view_pending_note
     @note = Note.find(params[:id])
+    # This is worthy of a refactor
     unless @note.active? || logged_in_as_admin? || (logged_in? && @note.owned_by?(current_user))
       flash[:danger] = "You are not authorised to perform that action"
       redirect_to root_path
     end
   end
 
+  # Applies to edit, update & destroy
   def authorised_for_note_actions
     @note = Note.find(params[:id])
     unless @note.owned_by?(current_user) || logged_in_as_admin?
