@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Note requests", type: :request do
+RSpec.describe "Note requests" do
   let!(:admin)            { create(:admin) }
   let!(:team_member)      { create(:user) }
   let!(:team_member_note) { create(:note, user: team_member) }

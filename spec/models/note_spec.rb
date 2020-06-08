@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature Note, type: :model do
+RSpec.describe Note do
   let!(:team_member)      { create(:user) }
   let!(:admin)            { create(:admin) }
   let!(:team_member_note) { create(:note, user: team_member) }

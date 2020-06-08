@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Notes CRUD', type: :feature, js: true do
+RSpec.feature 'Notes CRUD', js: true do
   let!(:team_member)      { create(:user) }
   let!(:admin)            { create(:admin) }
   let!(:team_member_note) { create(:note, user: team_member) }

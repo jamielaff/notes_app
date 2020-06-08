@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Users CRUD', type: :feature, js: true do
+RSpec.feature 'Users CRUD', js: true do
   let!(:admin)            { create(:admin) }
   let!(:team_member)      { create(:user) }
   let!(:admin_new)        { create(:another_admin) }

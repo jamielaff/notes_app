@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "User requests", type: :request do
+RSpec.describe "User requests" do
 
   context 'deleting users' do
     let!(:admin_user)     { create(:admin) }
