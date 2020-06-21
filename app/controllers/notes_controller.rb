@@ -7,7 +7,7 @@ class NotesController < ApplicationController
   before_action :authorised_for_moderation,       only: [:pending, :approve]
 
   def index
-    @notes = Note.active.paginate(page: params[:page], per_page: 5)
+    @notes = Note.by_admin.active.paginate(page: params[:page], per_page: 5).order(created_at: :desc)
   end
 
   def show
