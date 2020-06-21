@@ -5,7 +5,7 @@
   
 **About**  
 This project includes full CI/CD with Codeship & Heroku.  
-A live version of this application is available on http://notes.jamielafferty.co.uk. 
+A live version of this application is available on http://jamielafferty.co.uk. 
   
 **Login/Logout**  
 - Sessions functionality
