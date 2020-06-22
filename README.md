@@ -1,4 +1,6 @@
-# README  [![Codeship Status for jamielaff/notes_app](https://app.codeship.com/projects/08c9b010-8332-0138-e03d-5e63fbe942d1/status?branch=master)](https://app.codeship.com/projects/398229)
+[![Codeship Status for jamielaff/notes_app](https://app.codeship.com/projects/08c9b010-8332-0138-e03d-5e63fbe942d1/status?branch=master)](https://app.codeship.com/projects/398229)
+[![codecov](https://codecov.io/gh/jamielaff/notes_app/branch/master/graph/badge.svg)](https://codecov.io/gh/jamielaff/notes_app)
+# README  
 
 **Ruby version**  
 2.7.1p83  
