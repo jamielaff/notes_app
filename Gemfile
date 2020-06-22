@@ -57,4 +57,6 @@ group :test do
   gem 'rspec-rails', '~> 4.0.0'
   # Factory bot for tests
   gem 'factory_bot_rails'
+  # Code coverage
+  gem 'codecov'
 end
