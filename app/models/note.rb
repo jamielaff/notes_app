@@ -2,11 +2,10 @@ class Note < ActiveRecord::Base
   belongs_to :user
   
   validates :title, presence: true, length: { minimum: 3, maximum: 50 }
-  validates :description, presence: true, length: { minimum: 10, maximum: 1000 }
+  validates :description, presence: true, length: { minimum: 10, maximum: 300 }
 
   scope :active,    -> { where(is_active: true) }
   scope :pending,   -> { where(is_active: false) }
-  scope :by_admin,  -> { joins(:user).where('users.is_admin' => 'true') }
 
   def owned_by?(user_to_verify)
     user.present? && user == user_to_verify
