@@ -20,7 +20,14 @@ module Api
       def create
         @user = User.new(user_params)
         if @user.save
-          render json: @user, status: :created, location: @user
+          payload = { user_id: user.id }
+          session = JWTSessions::Session.new(payload: payload, refresh_by_access_allowed: true)
+          tokens = session.login
+          response.set_cookie(JWTSessions.access_cookie, 
+                              value: tokens[:access],
+                              httponly: true)
+                              #secure: Rails.env.production?)
+          render json: { csrf: tokens[:csrf] }
           # if logged_out?
           #   session[:user_id] = @user.id
           #   respond_to do |format|
@@ -38,7 +45,7 @@ module Api
           #   end
           # end
         else
-          render json: @user.errors, status: :unprocessable_entity
+          render json: { error: @user.errors.full_messages.join(' ')}, status: :unprocessable_entity
           # respond_to do |format|
           #   format.js
           # end
