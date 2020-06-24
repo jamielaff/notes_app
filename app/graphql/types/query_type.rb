@@ -1,12 +1,15 @@
 module Types
-  class QueryType < Types::BaseObject
-
-    field :users, [Types::UserType], null: false, description: "All the users"
-    field :user, Types::UserType, null: false, description: "User by ID" do
+  class QueryType < BaseObject
+    # /users
+    field :users, [UserType], null: false
+    # /user/id
+    field :user, UserType, null: false do
       argument :id, ID, required: true
     end
-    field :notes, [Types::NoteType], null: true, description: "All the notes"
-    field :currentUser, Types::UserType, null: false
+    # /notes
+    field :notes, [NoteType], null: true
+    # /currentUser
+    field :current_user, UserType, null: false
 
     def users
       User.all
