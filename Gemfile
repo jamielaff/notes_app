@@ -15,8 +15,11 @@ gem 'webpacker', '~> 4.0'
 gem 'sass-rails', '>= 6'
 # Bootstrap styling
 gem 'bootstrap-sass', '~> 3.4.1' 
+# Redis adapter to run Action Cable in production
+gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+gem 'jwt_sessions', '~> 2.3'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -40,7 +43,7 @@ gem 'graphql'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'graphiql-rails'
+  gem 'graphiql-rails', '1.7.0'
 end
 
 group :development do
