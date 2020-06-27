@@ -15,8 +15,6 @@ gem 'webpacker', '~> 4.0'
 gem 'sass-rails', '>= 6'
 # Bootstrap styling
 gem 'bootstrap-sass', '~> 3.4.1' 
-# Redis adapter to run Action Cable in production
-gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 gem 'jwt_sessions', '~> 2.3'
@@ -39,6 +37,9 @@ gem 'bootstrap-will_paginate', '1.0.0'
 
 # GraphQL
 gem 'graphql'
+
+# CORS
+gem 'rack-cors', '0.4.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
