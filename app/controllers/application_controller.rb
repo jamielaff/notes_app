@@ -1,12 +1,12 @@
 class ApplicationController < ActionController::API
   include JWTSessions::RailsAuthorization
   rescue_from JWTSessions::Errors::Unauthorized, with: :not_authorised
-  before_action :authorised
+  # before_action :authorised
 
-  #helper_method :current_user
-  #helper_method :logged_in?
-  #helper_method :logged_out?
-  #helper_method :logged_in_as_admin?
+  # helper_method :current_user
+  # helper_method :logged_in?
+  # helper_method :logged_out?
+  # helper_method :logged_in_as_admin?
 
   def current_user
     @current_user ||= User.find(payload['user_id'])

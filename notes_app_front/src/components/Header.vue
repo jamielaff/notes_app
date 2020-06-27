@@ -19,8 +19,10 @@
 
 <script>
 export default {
+  template: '<Header/>',
   name: 'Header',
   created () {
+    console.log(localStorage.signedIn)
     this.signedIn()
   },
   methods: {
@@ -28,6 +30,7 @@ export default {
       this.error = (error.response && error.response.data && error.response.data.error) || text
     },
     signedIn () {
+      console.log(localStorage.signedIn)
       return localStorage.signedIn
     },
     signOut () {
@@ -35,6 +38,7 @@ export default {
         .then(response => {
           delete localStorage.csrf
           delete localStorage.signedIn
+          console.log(localStorage.signedIn)
           this.$router.replace('/')
         })
         .catch(error => this.setError(error, 'Cannot sign out'))

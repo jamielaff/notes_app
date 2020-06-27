@@ -42,7 +42,7 @@ export default {
     this.checkSignedIn()
   },
   updated () {
-    this.checkUpdated()
+    this.checkSignedIn()
   },
   methods: {
     signin () {
