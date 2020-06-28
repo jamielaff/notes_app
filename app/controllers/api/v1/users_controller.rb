@@ -3,11 +3,12 @@ module Api
     class UsersController < ApplicationController
       #skip_before_action :authorised, only: [:index, :new, :create, :show]
 
-      before_action :authorised_for_user_create, except: [:index, :show, :edit, :update, :destroy]
-      before_action :authorised_for_user_update, except: [:index, :new, :create, :show]
+      #before_action :authorised_for_user_create, except: [:index, :show, :edit, :update, :destroy]
+      #before_action :authorised_for_user_update, except: [:index, :new, :create, :show]
 
       def index
-        @users = User.paginate(page: params[:page], per_page: 5)
+        # @users = User.paginate(page: params[:page], per_page: 5)
+        @users = User.all
         render json: @users
       end
 
@@ -19,6 +20,7 @@ module Api
       # This is used for signup & admin create user. It would be worth moving signup logic out of this CRUD
       def create
         @user = User.new(user_params)
+        puts @user.password
         if @user.save
           payload = { user_id: user.id }
           session = JWTSessions::Session.new(payload: payload, refresh_by_access_allowed: true)
@@ -80,12 +82,13 @@ module Api
 
       def destroy
         @user = User.find(params[:id])
-        if current_user == @user
-          reset_session
+        puts current_user
+        pry
+        if @user.destroy
+          render json: :ok
+        else
+          render json: @user.errors, status: :unprocessable_entity
         end
-        @user.destroy
-        flash[:success] = "User was deleted"
-        redirect_to root_path
       end
 
       private

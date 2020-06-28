@@ -39,7 +39,8 @@ export default {
           delete localStorage.csrf
           delete localStorage.signedIn
           console.log(localStorage.signedIn)
-          this.$router.replace('/')
+          this.$router.push('/')
+          window.location.reload() // FIXME Need a better way of doing this
         })
         .catch(error => this.setError(error, 'Cannot sign out'))
     }

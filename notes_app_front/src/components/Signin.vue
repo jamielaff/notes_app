@@ -57,8 +57,11 @@ export default {
       }
       localStorage.csrf = response.data.csrf
       localStorage.signedIn = true
+      // localStorage.currentUser = user.id
+      console.log(response.data)
       this.error = ''
-      this.$router.replace('/users')
+      this.$router.push('/users')
+      // window.location.reload() // FIXME Need a better way of doing this
     },
     signinFailed (error) {
       this.error = (error.response && error.response.data && error.response.data.error) || ''
@@ -67,7 +70,8 @@ export default {
     },
     checkSignedIn () {
       if (localStorage.signedIn) {
-        this.$router.replace('/users')
+        this.$router.push('/users')
+        window.location.reload() // FIXME Need a better way of doing this
       }
     }
   }

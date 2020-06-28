@@ -72,7 +72,8 @@ export default {
   },
   created () {
     if (!localStorage.signedIn) {
-      this.$router.replace('/')
+      this.$router.push('/')
+      window.location.reload() // FIXME Need a better way of doing this
     } else {
       this.$http.secured.get('/api/v1/notes')
         .then(response => { this.notes = response.data })

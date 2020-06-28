@@ -40,10 +40,10 @@
     </p>
 
     <ul class="list-reset mt-4">
-      <li class="py-4" v-for="user in users" :key="user.id" :user="user">
-        <div class="flex items-center justify-between flex-wrap">
-          <p class="block flex-1 font-mono font-semibold flex items-center"></p>
-          {{ user.username }}
+      <li class="mb-6 border p-10 border-grey-light shadow rounded" v-for="user in users" :key="user.id" :user="user">
+        <div class="flex items-center flex-wrap">
+          <div v-if="userIsAdmin(user)" class="items-left">[A]</div>
+          <router-link :to="{ name:'User', params: { user_id: user.id }}">{{user.username}}</router-link>
         </div>
         <button class="bg-tranparent text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 mr-2 rounded" @click.prevent="editUser(user)">Edit</button>
 
@@ -77,7 +77,8 @@ export default {
   },
   created () {
     if (!localStorage.signedIn) {
-      this.$router.replace('/')
+      this.$router.push('/')
+      window.location.reload() // FIXME Need a better way of doing this
     } else {
       this.$http.secured.get('/api/v1/users')
         .then(response => { this.users = response.data })
@@ -114,6 +115,9 @@ export default {
       this.editedUser = ''
       this.$http.secured.patch(`/api/v1/users/${user.id}`, { user: { username: user.username, email: user.email, password: user.password } })
         .catch(error => this.setError(error, 'Cannot update user'))
+    },
+    userIsAdmin (user) {
+      return user.is_admin
     }
   }
 }

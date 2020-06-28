@@ -52,7 +52,8 @@ export default {
   },
   methods: {
     signup () {
-      this.$http.plain.post('/api/v1/users#create', { username: this.username, email: this.email, password: this.password })
+      console.log('here')
+      this.$http.plain.post('/signup', { username: this.username, email: this.email, password: this.password })
         .then(response => this.signupSuccessful(response))
         .catch(error => this.signupFailed(error))
     },
@@ -64,7 +65,8 @@ export default {
       localStorage.csrf = response.data.csrf
       localStorage.signedIn = true
       this.error = ''
-      this.$router.replace('/users')
+      this.$router.push('/users')
+      window.location.reload() // FIXME Need a better way of doing this
     },
     signupFailed (error) {
       this.error = (error.response && error.response.data && error.response.data.error) || ''
@@ -73,7 +75,8 @@ export default {
     },
     checkSignedIn () {
       if (localStorage.signedIn) {
-        this.$router.replace('/users')
+        this.$router.push('/users')
+        window.location.reload() // FIXME Need a better way of doing this
       }
     }
   }
