@@ -6,6 +6,21 @@ class SessionsController < ApplicationController
   end
 
   def create
+    query_string = "
+    mutation {
+      signinUser(
+        username: $username,
+        password: $password,
+      ) {
+        user {
+          id
+        }
+        token
+      }
+    }"
+    
+    NotesAppSchema.execute(query_string, variables: variables)
+
     @user = User.find_by(username: params[:username].downcase)
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id

@@ -1,16 +1,20 @@
 Rails.application.routes.draw do
-  get 'login',      to: 'sessions#new'
-  post 'login',     to: 'sessions#create'
-  delete 'logout',  to: 'sessions#destroy'
-  get 'signup',     to: 'users#new'
-
-  resources :users
-  resources :notes, except: [:index] do
-    collection do
-      get :pending
-    end
-    put :approve
+  if Rails.env.development?
+    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
   end
+  post '/graphql',  to: 'graphql#execute'
+
+  namespace :api do
+    namespace :v1 do
+      resources :users
+      resources :notes
+    end
+  end
+
+  post 'refresh',   controller: :refresh, action: :create
+  post 'signin',    controller: :signin,  action: :create
+  delete 'signin',  controller: :signin,  action: :destroy
+  post 'signup',    controller: :signup,  action: :create
 
   root 'notes#index'
 end

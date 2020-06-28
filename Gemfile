@@ -17,6 +17,7 @@ gem 'sass-rails', '>= 6'
 gem 'bootstrap-sass', '~> 3.4.1' 
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+gem 'jwt_sessions', '~> 2.3'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -34,9 +35,16 @@ gem 'font-awesome-sass', '~> 5.12.0'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate', '1.0.0'
 
+# GraphQL
+gem 'graphql'
+
+# CORS
+gem 'rack-cors', '0.4.1'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'graphiql-rails', '1.7.0'
 end
 
 group :development do
