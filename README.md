@@ -38,3 +38,5 @@ A live version of this application is available on http://jamielafferty.co.uk.
 - I have included request specs to test the security of the application
 - These tests cover the happy & sad paths of user journeys, along with testing the security aspect of the app in general
 - While I do not have 100% coverage, I have green-lighted the main flows through the app.
+
+test commit
